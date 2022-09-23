@@ -1,6 +1,6 @@
 # wpazuredevops
 
------ACR *******/
+### ACR 
 1.APP root: app
 Dockerfile path: app/Dockerfile
 
