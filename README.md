@@ -1,17 +1,17 @@
 # wpazuredevops
 
 -----ACR *******/
-APP root: app
+1.APP root: app
 Dockerfile path: app/Dockerfile
 
------Build pipeline
+### Build pipeline
 auzre-pipelines/auzre-pipelines-1.yml
 
------Release pipeline
+### Release pipeline
 templates/deploy/template.jon
 Azure CLI command: az mysql flexible-server parameter set --name require_secure_transport --resource-group numotionWPRGDEV --server-name numotionwpdbdev --value OFF
 
-Blob Container setup
+### Blob Container setup
 Go to wordpress site
 User: admin Pass: admin@1234
 Settings->Microsoft Azure plugin
