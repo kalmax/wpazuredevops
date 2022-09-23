@@ -1,0 +1,932 @@
+{
+    "$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "subscriptionId": {
+            "defaultValue": "c89770e4-eafa-4fac-b448-ec14c509df0c",
+            "type": "string"
+        },
+        "name": {
+            "defaultValue": "numotionwpappdev",
+            "type": "string"
+        },
+        "location": {
+            "defaultValue": "eastus",
+            "type": "string"
+        },
+        "hostingPlanName": {
+            "defaultValue": "NumotionWPRGDEVHostingPlan",
+            "type": "string"
+        },
+        "serverFarmResourceGroup": {
+            "defaultValue": "numotionwprgdev",
+            "type": "string"
+        },
+        "sku": {
+            "defaultValue": "Basic",
+            "type": "string"
+        },
+        "skuCode": {
+            "defaultValue": "B1",
+            "type": "string"
+        },
+        "workerSize": {
+            "defaultValue": "3",
+            "type": "string"
+        },
+        "workerSizeId": {
+            "defaultValue": "3",
+            "type": "string"
+        },
+        "numberOfWorkers": {
+            "defaultValue": "1",
+            "type": "string"
+        },
+        "kind": {
+            "defaultValue": "linux",
+            "type": "string"
+        },
+        "reserved": {
+            "defaultValue": true,
+            "type": "bool"
+        },
+        "alwaysOn": {
+            "defaultValue": true,
+            "type": "bool"
+        },
+        "linuxFxVersion": {
+            "defaultValue": "DOCKER|numotionwpdev.azurecr.io/numotionwpacr-dev:latest",
+            "type": "string"
+        },
+        "dockerRegistryUrl": {
+            "defaultValue": "https://numotionwpdev.azurecr.io",
+            "type": "string"
+        },
+        "dockerRegistryUser": {
+            "defaultValue": "numotionwpdev",
+            "type": "String"
+        },
+        "dockerRegistryPass": {
+            "defaultValue": "KA6G4tP6WEtiHtfMO=7qZd=Eg1zvuy6+",
+            "type": "String"
+        },
+        "storageSizeGB": {
+            "defaultValue": 32,
+            "type": "int"
+        },
+        "storageIops": {
+            "defaultValue": 400,
+            "type": "int"
+        },
+        "storageAutoGrow": {
+            "defaultValue": "Enabled",
+            "type": "string"
+        },
+        "backupRetentionDays": {
+            "defaultValue": 7,
+            "type": "int"
+        },
+        "geoRedundantBackup": {
+            "defaultValue": "Disabled",
+            "type": "string"
+        },
+        "charset": {
+            "defaultValue": "utf8",
+            "type": "string"
+        },
+        "collation": {
+            "defaultValue": "utf8_general_ci",
+            "type": "string"
+        },
+        "vmName": {
+            "defaultValue": "Standard_B1ms",
+            "type": "string"
+        },
+        "serverEdition": {
+            "defaultValue": "Burstable",
+            "type": "string"
+        },
+        "vCores": {
+            "defaultValue": 1,
+            "type": "int"
+        },
+        "serverName": {
+            "defaultValue": "numotionwpdbdev",
+            "type": "string"
+        },
+        "serverUsername": {
+            "defaultValue": "numotionwp",
+            "type": "string"
+        },
+        "serverPassword": {
+            "defaultValue": "numotionwp1234",
+            "type": "securestring"
+        },
+        "databaseName": {
+            "defaultValue": "wordpress",
+            "type": "string"
+        },
+        "publicNetworkAccess": {
+            "defaultValue": "Disabled",
+            "type": "string"
+        },
+        "wordpressTitle": {
+            "defaultValue": "Numotion",
+            "type": "string"
+        },
+        "wordpressAdminEmail": {
+            "defaultValue": "kalpan.bhalsod@from.digital",
+            "type": "string"
+        },
+        "wordpressUsername": {
+            "defaultValue": "admin",
+            "type": "string"
+        },
+        "wordpressPassword": {
+            "defaultValue": "admin@1234",
+            "type": "securestring"
+        },
+        "defaultPluginsInstall": {
+            "defaultValue": "windows-azure-storage",
+            "type": "string"
+        },
+        "wpLocaleCode": {
+            "defaultValue": "en_US",
+            "type": "string"
+        },
+        "cdnProfileName": {
+            "defaultValue": "numotion-cdnprofile-dev",
+            "type": "string"
+        },
+        "cdnEndpointName": {
+            "defaultValue": "numotion-endpoint-dev",
+            "type": "string"
+        },
+        "cdnType": {
+            "defaultValue": "Standard_Microsoft",
+            "type": "string"
+        },
+        "storageAccountName": {
+            "defaultValue": "numotionstoragedev",
+            "type": "string"
+        },
+        "storageAccountType": {
+            "defaultValue": "Standard_RAGRS",
+            "type": "string"
+        },
+        "storageAccountKind": {
+            "defaultValue": "StorageV2",
+            "type": "string"
+        },
+        "accessTier": {
+            "defaultValue": "Hot",
+            "type": "string"
+        },
+        "minimumTlsVersion": {
+            "defaultValue": "TLS1_2",
+            "type": "string"
+        },
+        "supportsHttpsTrafficOnly": {
+            "defaultValue": true,
+            "type": "bool"
+        },
+        "allowBlobPublicAccess": {
+            "defaultValue": true,
+            "type": "bool"
+        },
+        "allowSharedKeyAccess": {
+            "defaultValue": true,
+            "type": "bool"
+        },
+        "allowCrossTenantReplication": {
+            "defaultValue": true,
+            "type": "bool"
+        },
+        "networkAclsBypass": {
+            "defaultValue": "AzureServices",
+            "type": "string"
+        },
+        "networkAclsDefaultAction": {
+            "defaultValue": "Allow",
+            "type": "string"
+        },
+        "keySource": {
+            "defaultValue": "Microsoft.Storage",
+            "type": "string"
+        },
+        "encryptionEnabled": {
+            "defaultValue": true,
+            "type": "bool"
+        },
+        "infrastructureEncryptionEnabled": {
+            "defaultValue": false,
+            "type": "bool"
+        },
+        "blobContainerName": {
+            "defaultValue": "numotionfiles",
+            "type": "string"
+        },
+        "blobPublicAccessLevel": {
+            "defaultValue": "blob",
+            "type": "string"
+        },
+        "vnetName": {
+            "defaultValue": "numotionwp-vnet-dev",
+            "type": "string"
+        },
+        "subnetForApp": {
+            "defaultValue": "numotionwp-appsubnet-dev",
+            "type": "string"
+        },
+        "subnetForDb": {
+            "defaultValue": "numotionwp-dbsubnet",
+            "type": "string"
+        },
+        "privateDnsZoneNameForDb": {
+            "defaultValue": "wpnumotiondb-privatelink.mysql.database.azure.com",
+            "type": "string"
+        },
+        "frontDoorEndpointName": {
+            "type": "string",
+            "defaultValue": "[format('afd-{0}', uniqueString(resourceGroup().id))]"
+        },
+        "frontDoorSkuName": {
+            "type": "string",
+            "defaultValue": "Premium_AzureFrontDoor"  
+        }
+    },
+    "resources": [
+        {
+            "apiVersion": "[variables('appServicesApiVersion')]",
+            "name": "[parameters('name')]",
+            "type": "Microsoft.Web/sites",
+            "location": "[parameters('location')]",
+            "tags": {},
+            "dependsOn": [
+                "[concat('Microsoft.Web/serverfarms/', parameters('hostingPlanName'))]",
+                "[concat('Microsoft.DBforMySQL/flexibleServers/', parameters('serverName'))]",
+                "[concat('Microsoft.DBforMySQL/flexibleServers/', parameters('serverName'), '/databases/', parameters('databaseName'))]",
+                "[resourceId('Microsoft.Cdn/profiles', variables('frontDoorProfileName'))]",
+                "[resourceId('Microsoft.Storage/storageAccounts/blobServices/containers', parameters('storageAccountName'), 'default', parameters('blobContainerName'))]"
+            ],
+            "properties": {
+                "name": "[parameters('name')]",
+                "siteConfig": {
+                    "appSettings": [
+                        {
+                            "name": "DOCKER_REGISTRY_SERVER_URL",
+                            "value": "[parameters('dockerRegistryUrl')]"
+                        },
+                        {
+                            "name": "DOCKER_REGISTRY_SERVER_USERNAME",
+                            "value": "[parameters('dockerRegistryUser')]"
+                        },
+                        {
+                            "name": "DOCKER_REGISTRY_SERVER_PASSWORD",
+                            "value": "[parameters('dockerRegistryPass')]"
+                        },
+                        {
+                            "name": "DOCKER_ENABLE_CI",
+                            "value": "true"
+                        },
+                        {
+                            "name": "WEBSITES_ENABLE_APP_SERVICE_STORAGE",
+                            "value": "true"
+                        },
+                        {
+                            "name": "WORDPRESS_TITLE",
+                            "value": "[parameters('wordpressTitle')]"
+                        },
+                        {
+                            "name": "WEBSITES_CONTAINER_START_TIME_LIMIT",
+                            "value": "900"
+                        },
+                        {
+                            "name": "WEBSITES_PORT",
+                            "value": "8080"
+                        },
+                        {
+                            "name": "WORDPRESS_DATABASE_HOST",
+                            "value": "[concat(parameters('serverName'),'.mysql.database.azure.com')]"
+                        },
+                        {
+                            "name": "WORDPRESS_DATABASE_NAME",
+                            "value": "[parameters('databaseName')]"
+                        },
+                        {
+                            "name": "WORDPRESS_DATABASE_USER",
+                            "value": "[parameters('serverUsername')]"
+                        },
+                        {
+                            "name": "WORDPRESS_DATABASE_PASSWORD",
+                            "value": "[parameters('serverPassword')]"
+                        },
+                        {
+                            "name": "WORDPRESS_DATA_TO_PERSIST",
+                            "value": "wp-config.php wp-content/index.php wp-content/languages wp-content/upgrade wp-content/uploads"
+                        },
+                        {
+                            "name": "WORDPRESS_USERNAME",
+                            "value": "[parameters('wordpressUsername')]"
+                        },
+                        {
+                            "name": "WORDPRESS_PASSWORD",
+                            "value": "[parameters('wordpressPassword')]"
+                        },
+                        {
+                            "name": "WORDPRESS_EMAIL",
+                            "value": "[parameters('wordpressAdminEmail')]"
+                        },
+                        {
+                            "name": "WORDPRESS_BLOG_NAME",
+                            "value": "[parameters('wordpressTitle')]"
+                        },
+                        {
+                            "name": "WORDPRESS_PLUGINS",
+                            "value": "[parameters('defaultPluginsInstall')]"
+                        },
+                        {
+                            "name": "WORDPRESS_ENABLE_HTTPS",
+                            "value": "yes"
+                        },
+                        {
+                            "name": "ALLOW_EMPTY_PASSWORD",
+                            "value": "Yes"
+                        },
+                        {
+                            "name": "enabled",
+                            "value": "Yes"
+                        },
+                        {
+                            "name": "WORDPRESS_LOCALE_CODE",
+                            "value": "[parameters('wpLocaleCode')]"
+                        },
+                        {
+                            "name": "SETUP_PHPMYADMIN",
+                            "value": "false"
+                        },
+                        {
+                            "name": "CDN_ENABLED",
+                            "value": "true"
+                        },
+                        {
+                            "name": "CDN_ENDPOINT",
+                            "value": "[concat(parameters('cdnEndPointName'),'.azureedge.net')]"
+                        },
+                        {
+                            "name": "MICROSOFT_AZURE_USE_FOR_DEFAULT_UPLOAD",
+                            "value": "true"
+                        },
+                        {
+                            "name": "MICROSOFT_AZURE_ACCOUNT_NAME",
+                            "value": "[parameters('storageAccountName')]"
+                        },
+                        {
+                            "name": "MICROSOFT_AZURE_CONTAINER",
+                            "value": "[parameters('blobContainerName')]"
+                        },
+                        {
+                            "name": "MICROSOFT_AZURE_ACCOUNT_KEY",
+                            "value": "[listKeys(variables('storageAccountId'), '2019-04-01').keys[0].value]"
+                        }
+                    ],
+                    "connectionStrings": [],
+                    "linuxFxVersion": "[parameters('linuxFxVersion')]",
+                    "vnetRouteAllEnabled": true,
+                    "detailedErrorLoggingEnabled": true,
+                    "httpLoggingEnabled": true,
+                    "requestTracingEnabled": true,
+                    "ftpsState": "Disabled",
+                    "minTlsVersion": "1.2"
+                },
+                "serverFarmId": "[concat('/subscriptions/', parameters('subscriptionId'),'/resourcegroups/', parameters('serverFarmResourceGroup'), '/providers/Microsoft.Web/serverfarms/', parameters('hostingPlanName'))]",
+                "clientAffinityEnabled": false,
+                "httpsOnly": true
+            }
+        },
+        {
+            "apiVersion": "[variables('appServicesApiVersion')]",
+            "name": "[parameters('hostingPlanName')]",
+            "type": "Microsoft.Web/serverfarms",
+            "location": "[parameters('location')]",
+            "kind": "[parameters('kind')]",
+            "tags": {},
+            "properties": {
+                "name": "[parameters('hostingPlanName')]",
+                "workerSize": "[parameters('workerSize')]",
+                "workerSizeId": "[parameters('workerSizeId')]",
+                "numberOfWorkers": "[parameters('numberOfWorkers')]",
+                "reserved": "[parameters('reserved')]"
+            },
+            "sku": {
+                "Tier": "[parameters('sku')]",
+                "Name": "[parameters('skuCode')]"
+            },
+            "dependsOn": [
+                "[resourceId('Microsoft.DBforMySQL/flexibleServers', parameters('serverName'))]"
+            ]
+        },
+        {
+            "apiVersion": "[variables('databaseApiVersion')]",
+            "location": "[parameters('location')]",
+            "name": "[parameters('serverName')]",
+            "type": "Microsoft.DBforMySQL/flexibleServers/",
+            "tags": {
+                "AppProfile": "Wordpress"
+            },
+            "properties": {
+                "version": "[variables('databaseVersion')]",
+                "administratorLogin": "[parameters('serverUsername')]",
+                "administratorLoginPassword": "[parameters('serverPassword')]",
+                "publicNetworkAccess": "[parameters('publicNetworkAccess')]",
+                "Storage": {
+                    "StorageSizeGB": "[parameters('storageSizeGB')]",
+                    "Iops": "[parameters('storageIops')]",
+                    "Autogrow": "[parameters('storageAutoGrow')]"
+                },
+                "Backup": {
+                    "backupRetentionDays": "[parameters('backupRetentionDays')]",
+                    "geoRedundantBackup": "[parameters('geoRedundantBackup')]"
+                },
+                "Network": {
+                    "PrivateDnsZoneResourceId": "[resourceId('Microsoft.Network/privateDnsZones', parameters('privateDnsZoneNameForDb'))]",
+                    "DelegatedSubnetResourceId": "[resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('vnetName'), parameters('subnetForDb'))]"
+                }
+            },
+            "sku": {
+                "name": "[parameters('vmName')]",
+                "tier": "[parameters('serverEdition')]",
+                "capacity": "[parameters('vCores')]"
+            },
+            "dependsOn": [
+                "[resourceId('Microsoft.Network/privateDnsZones/virtualNetworkLinks', parameters('privateDnsZoneNameForDb'), format('{0}-vnetlink', parameters('privateDnsZoneNameForDb')))]"
+            ]
+        },
+        {
+            "type": "Microsoft.DBforMySQL/flexibleServers/databases",
+            "name": "[format('{0}/{1}', parameters('serverName'), parameters('databaseName') )]",
+            "apiVersion": "[variables('databaseApiVersion')]",
+            "properties": {
+                "charset": "[parameters('charset')]",
+                "collation": "[parameters('collation')]"
+            },
+            "dependsOn": [
+                "[resourceId('Microsoft.DBforMySQL/flexibleServers', parameters('serverName'))]"
+            ]
+        },
+        {
+            "type": "Microsoft.Network/virtualNetworks",
+            "apiVersion": "[variables('vnetDeploymentApiVersion')]",
+            "location": "[parameters('location')]",
+            "name": "[parameters('vnetName')]",
+            "properties": {
+                "addressSpace": {
+                    "addressPrefixes": [
+                        "[variables('vnetAddress')]"
+                    ]
+                },
+                "subnets": [
+                    {
+                        "name": "[parameters('subnetForApp')]",
+                        "properties": {
+                            "addressPrefix": "[variables('subnetAddressForApp')]",
+                            "delegations": [
+                                {
+                                    "name": "dlg-appService",
+                                    "properties": {
+                                        "serviceName": "Microsoft.Web/serverFarms"
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    {
+                        "name": "[parameters('subnetForDb')]",
+                        "properties": {
+                            "addressPrefix": "[variables('subnetAddressForDb')]",
+                            "delegations": [
+                                {
+                                    "name": "dlg-database",
+                                    "properties": {
+                                        "serviceName": "Microsoft.DBforMySQL/flexibleServers"
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                ]
+            },
+            "dependsOn": []
+        },
+        {
+            "type": "Microsoft.Network/privateDnsZones",
+            "apiVersion": "[variables('privateDnsApiVersion')]",
+            "name": "[parameters('privateDnsZoneNameForDb')]",
+            "location": "global",
+            "resources": [
+                {
+                    "type": "virtualNetworkLinks",
+                    "apiVersion": "[variables('privateDnsApiVersion')]",
+                    "name": "[format('{0}-vnetlink', parameters('privateDnsZoneNameForDb'))]",
+                    "location": "global",
+                    "dependsOn": [
+                        "[resourceId('Microsoft.Network/privateDnsZones', parameters('privateDnsZoneNameForDb'))]",
+                        "[resourceId('Microsoft.Network/virtualNetworks/', parameters('vnetName'))]"
+                    ],
+                    "properties": {
+                        "virtualNetwork": {
+                            "id": "[resourceId('Microsoft.Network/virtualNetworks/', parameters('vnetName'))]"
+                        },
+                        "registrationEnabled": true
+                    }
+                }
+            ],
+            "dependsOn": []
+        },
+        {
+            "apiVersion": "[variables('appServicesApiVersion')]",
+            "type": "Microsoft.Web/sites/networkConfig",
+            "name": "[format('{0}/{1}', parameters('name'), 'virtualNetwork')]",
+            "properties": {
+                "subnetResourceId": "[resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('vnetName'), parameters('subnetForApp'))]"
+            },
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/Sites', parameters('name'))]",
+                "[resourceId('Microsoft.Network/privateDnsZones/virtualNetworkLinks', parameters('privateDnsZoneNameForDb'), format('{0}-vnetlink', parameters('privateDnsZoneNameForDb')))]"
+            ]
+        },
+        {
+            "type": "Microsoft.Web/sites/config",
+            "apiVersion": "[variables('appServicesApiVersion')]",
+            "name": "[concat(parameters('name'), '/web')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/Sites', parameters('name'))]",
+                "[resourceId('Microsoft.Web/sites/networkConfig', parameters('name'), 'virtualNetwork')]"
+            ],
+            "properties": {
+                "alwaysOn": "[parameters('alwaysOn')]"
+            }
+        },
+        {
+            "apiVersion": "[variables('cdnApiVersion')]",
+            "type": "Microsoft.Cdn/profiles",
+            "name": "[parameters('cdnProfileName')]",
+            "location": "Global",
+            "sku": {
+                "name": "[parameters('cdnType')]"
+            },
+            "tags": {
+                "AppProfile": "Wordpress"
+            },
+            "properties": {},
+            "dependsOn": [
+                "[resourceId('Microsoft.DBforMySQL/flexibleServers', parameters('serverName'))]"
+            ]
+        },
+        {
+            "apiVersion": "[variables('cdnApiVersion')]",
+            "type": "Microsoft.Cdn/profiles/endpoints",
+            "name": "[concat(parameters('cdnProfileName'),'/',parameters('cdnEndPointName'))]",
+            "location": "Global",
+            "properties": {
+                "isHttpAllowed": true,
+                "isHttpsAllowed": true,
+                "isCompressionEnabled": true,
+                "contentTypesToCompress": [
+                    "application/eot",
+                    "application/font",
+                    "application/font-sfnt",
+                    "application/javascript",
+                    "application/json",
+                    "application/opentype",
+                    "application/otf",
+                    "application/pkcs7-mime",
+                    "application/truetype",
+                    "application/ttf",
+                    "application/vnd.ms-fontobject",
+                    "application/xhtml+xml",
+                    "application/xml",
+                    "application/xml+rss",
+                    "application/x-font-opentype",
+                    "application/x-font-truetype",
+                    "application/x-font-ttf",
+                    "application/x-httpd-cgi",
+                    "application/x-javascript",
+                    "application/x-mpegurl",
+                    "application/x-opentype",
+                    "application/x-otf",
+                    "application/x-perl",
+                    "application/x-ttf",
+                    "font/eot",
+                    "font/ttf",
+                    "font/otf",
+                    "font/opentype",
+                    "image/svg+xml",
+                    "text/css",
+                    "text/csv",
+                    "text/html",
+                    "text/javascript",
+                    "text/js",
+                    "text/plain",
+                    "text/richtext",
+                    "text/tab-separated-values",
+                    "text/xml",
+                    "text/x-script",
+                    "text/x-component",
+                    "text/x-java-source"
+                ],
+                "origins": [
+                    {
+                        "name": "numotionwpdev-azurewebsites-net",
+                        "properties": {
+                            "hostName": "numotionwpappdev.azurewebsites.net",
+                            "httpPort": 80,
+                            "httpsPort": 443,
+                            "originHostHeader": "numotionwpappdev.azurewebsites.net",
+                            "priority": 1,
+                            "weight": 1000,
+                            "enabled": true
+                        }
+                    },
+                    {
+                        "name": "numotionstoragedev-blob-core-windows-net",
+                        "properties": {
+                            "hostName": "numotionstoragedev.blob.core.windows.net",
+                            "httpPort": 80,
+                            "httpsPort": 443,
+                            "originHostHeader": "numotionstoragedev.blob.core.windows.net",
+                            "priority": 1,
+                            "weight": 1000,
+                            "enabled": true
+                        }
+                    }
+                ],
+                "originGroups": [
+                    {
+                        "name": "blob-origin-group",
+                        "properties": {
+                            "origins": [
+                                {
+                                    "id": "[resourceId('Microsoft.Cdn/profiles/endpoints/origins', parameters('cdnProfileName'), parameters('cdnEndPointName'), 'numotionstoragedev-blob-core-windows-net')]"
+                                }
+                            ]
+                        }
+                    },
+                    {
+                        "name": "app-origin-group",
+                        "properties": {
+                            "origins": [
+                                {
+                                    "id": "[resourceId('Microsoft.Cdn/profiles/endpoints/origins', parameters('cdnProfileName'), parameters('cdnEndPointName'), 'numotionwpdev-azurewebsites-net')]"
+                                }
+                            ]
+                        }
+                    }
+                ],
+                "defaultOriginGroup": {
+                    "id": "[resourceId('Microsoft.Cdn/profiles/endpoints/originGroups', parameters('cdnProfileName'), parameters('cdnEndPointName'), 'blob-origin-group')]"
+                },
+                "geoFilters": [],
+                "deliveryPolicy": {
+                    "rules": [
+                        {
+                            "name": "originOverrideRule",
+                            "order": 1,
+                            "conditions": [
+                                {
+                                    "name": "UrlPath",
+                                    "parameters": {
+                                        "typeName": "DeliveryRuleUrlPathMatchConditionParameters",
+                                        "operator": "BeginsWith",
+                                        "negateCondition": true,
+                                        "matchValues": [
+                                            "[concat(parameters('blobContainerName'), '/wp-content/uploads/')]"
+                                        ],
+                                        "transforms": [
+                                            "Lowercase"
+                                        ]
+                                    }
+                                }
+                            ],
+                            "actions": [
+                                {
+                                    "name": "OriginGroupOverride",
+                                    "parameters": {
+                                        "typeName": "DeliveryRuleOriginGroupOverrideActionParameters",
+                                        "originGroup": {
+                                            "id": "[resourceId('Microsoft.Cdn/profiles/endpoints/originGroups', parameters('cdnProfileName'), parameters('cdnEndPointName'), 'app-origin-group')]"
+                                        }
+                                    }
+                                },
+                                {
+                                    "name": "UrlRewrite",
+                                    "parameters": {
+                                        "typeName": "DeliveryRuleUrlRewriteActionParameters",
+                                        "sourcePattern": "[concat('/', parameters('blobContainerName'), '/')]",
+                                        "destination": "/",
+                                        "preserveUnmatchedPath": true
+                                    }
+                                }
+                            ]
+                        }
+                    ]
+                }
+            },
+            "dependsOn": [
+                "[concat('Microsoft.Cdn/profiles/', parameters('cdnProfileName'))]",
+                "[resourceId('Microsoft.Web/Sites', parameters('name'))]",
+                "[resourceId('Microsoft.Storage/storageAccounts/blobServices/containers', parameters('storageAccountName'), 'default', parameters('blobContainerName'))]"
+            ]
+        },
+        {
+            "name": "[parameters('storageAccountName')]",
+            "type": "Microsoft.Storage/storageAccounts",
+            "apiVersion": "[variables('blobApiVersion')]",
+            "location": "[parameters('location')]",
+            "properties": {
+                "accessTier": "[parameters('accessTier')]",
+                "minimumTlsVersion": "[parameters('minimumTlsVersion')]",
+                "supportsHttpsTrafficOnly": "[parameters('supportsHttpsTrafficOnly')]",
+                "allowBlobPublicAccess": "[parameters('allowBlobPublicAccess')]",
+                "allowSharedKeyAccess": "[parameters('allowSharedKeyAccess')]",
+                "allowCrossTenantReplication": "[parameters('allowCrossTenantReplication')]",
+                "networkAcls": {
+                    "bypass": "[parameters('networkAclsBypass')]",
+                    "defaultAction": "[parameters('networkAclsDefaultAction')]",
+                    "ipRules": []
+                },
+                "encryption": {
+                    "keySource": "[parameters('keySource')]",
+                    "services": {
+                        "blob": {
+                            "enabled": "[parameters('encryptionEnabled')]"
+                        },
+                        "file": {
+                            "enabled": "[parameters('encryptionEnabled')]"
+                        },
+                        "table": {
+                            "enabled": "[parameters('encryptionEnabled')]"
+                        },
+                        "queue": {
+                            "enabled": "[parameters('encryptionEnabled')]"
+                        }
+                    },
+                    "requireInfrastructureEncryption": "[parameters('infrastructureEncryptionEnabled')]"
+                }
+            },
+            "kind": "[parameters('storageAccountKind')]",
+            "tags": {
+                "AppProfile": "Wordpress"
+            },
+            "sku": {
+                "name": "[parameters('storageAccountType')]"
+            },
+            "dependsOn": [
+                "[resourceId('Microsoft.DBforMySQL/flexibleServers', parameters('serverName'))]"
+            ]
+        },
+        {
+            "name": "[concat(parameters('storageAccountName'), '/default')]",
+            "type": "Microsoft.Storage/storageAccounts/blobServices",
+            "apiVersion": "[variables('blobApiVersion')]",
+            "properties": {
+                "restorePolicy": {
+                    "enabled": false
+                },
+                "deleteRetentionPolicy": {
+                    "enabled": true,
+                    "days": 7
+                },
+                "containerDeleteRetentionPolicy": {
+                    "enabled": true,
+                    "days": 7
+                },
+                "changeFeed": {
+                    "enabled": false
+                },
+                "isVersioningEnabled": false
+            },
+            "dependsOn": [
+                "[concat('Microsoft.Storage/storageAccounts/', parameters('storageAccountName'))]"
+            ]
+        },
+        {
+            "type": "Microsoft.Storage/storageAccounts/blobServices/containers",
+            "apiVersion": "[variables('blobApiVersion')]",
+            "name": "[concat(parameters('storageAccountName'), '/default/', parameters('blobContainerName'))]",
+            "properties": {
+                "immutableStorageWithVersioning": {
+                    "enabled": false
+                },
+                "metadata": {},
+                "publicAccess": "[parameters('blobPublicAccessLevel')]"
+            },
+            "dependsOn": [
+                "[resourceId('Microsoft.Storage/storageAccounts/blobServices', parameters('storageAccountName'), 'default')]",
+                "[concat('Microsoft.Storage/storageAccounts/', parameters('storageAccountName'))]"
+            ]
+        },
+        {
+            "type": "Microsoft.Cdn/profiles",
+            "apiVersion": "[variables('frontDoorApiVersion')]",
+            "name": "[variables('frontDoorProfileName')]",
+            "location": "global",
+            "sku": {
+              "name": "[parameters('frontDoorSkuName')]"
+            }
+        },
+        {
+            "type": "Microsoft.Cdn/profiles/afdEndpoints",
+            "apiVersion": "[variables('frontDoorApiVersion')]",
+            "name": "[format('{0}/{1}', variables('frontDoorProfileName'), parameters('frontDoorEndpointName'))]",
+            "location": "global",
+            "properties": {
+              "enabledState": "Enabled"
+            },
+            "dependsOn": [
+              "[resourceId('Microsoft.Cdn/profiles', variables('frontDoorProfileName'))]"
+            ]
+        },
+        {
+            "type": "Microsoft.Cdn/profiles/originGroups",
+            "apiVersion": "2021-06-01",
+            "name": "[format('{0}/{1}', variables('frontDoorProfileName'), variables('frontDoorOriginGroupName'))]",
+            "properties": {
+              "loadBalancingSettings": {
+                "sampleSize": 4,
+                "successfulSamplesRequired": 3
+              },
+              "healthProbeSettings": {
+                "probePath": "/",
+                "probeRequestType": "HEAD",
+                "probeProtocol": "Http",
+                "probeIntervalInSeconds": 100
+              }
+            },
+            "dependsOn": [
+              "[resourceId('Microsoft.Cdn/profiles', variables('frontDoorProfileName'))]"
+            ]
+        },
+        {
+            "type": "Microsoft.Cdn/profiles/originGroups/origins",
+            "apiVersion": "2021-06-01",
+            "name": "[format('{0}/{1}/{2}', variables('frontDoorProfileName'), variables('frontDoorOriginGroupName'), variables('frontDoorOriginName'))]",
+            "properties": {
+              "hostName": "[reference(resourceId('Microsoft.Web/sites', parameters('name'))).defaultHostName]",
+              "httpPort": 80,
+              "httpsPort": 443,
+              "originHostHeader": "[reference(resourceId('Microsoft.Web/sites', parameters('name'))).defaultHostName]",
+              "priority": 1,
+              "weight": 1000
+            },
+            "dependsOn": [
+              "[resourceId('Microsoft.Web/sites', parameters('name'))]",
+              "[resourceId('Microsoft.Cdn/profiles/originGroups', variables('frontDoorProfileName'), variables('frontDoorOriginGroupName'))]"
+            ]
+        },
+        {
+            "type": "Microsoft.Cdn/profiles/afdEndpoints/routes",
+            "apiVersion": "2021-06-01",
+            "name": "[format('{0}/{1}/{2}', variables('frontDoorProfileName'), parameters('frontDoorEndpointName'), variables('frontDoorRouteName'))]",
+            "properties": {
+              "originGroup": {
+                "id": "[resourceId('Microsoft.Cdn/profiles/originGroups', variables('frontDoorProfileName'), variables('frontDoorOriginGroupName'))]"
+              },
+              "supportedProtocols": [
+                "Http",
+                "Https"
+              ],
+              "patternsToMatch": [
+                "/*"
+              ],
+              "forwardingProtocol": "HttpsOnly",
+              "linkToDefaultDomain": "Enabled",
+              "httpsRedirect": "Enabled"
+            },
+            "dependsOn": [
+              "[resourceId('Microsoft.Cdn/profiles/afdEndpoints', variables('frontDoorProfileName'), parameters('frontDoorEndpointName'))]",
+              "[resourceId('Microsoft.Cdn/profiles/originGroups/origins', variables('frontDoorProfileName'), variables('frontDoorOriginGroupName'), variables('frontDoorOriginName'))]",
+              "[resourceId('Microsoft.Cdn/profiles/originGroups', variables('frontDoorProfileName'), variables('frontDoorOriginGroupName'))]"
+            ]
+        }
+    ],
+    "variables": {
+        "appServicesApiVersion": "2021-03-01",
+        "databaseApiVersion": "2021-05-01",
+        "databaseVersion": "5.7",
+        "vnetDeploymentApiVersion": "2020-07-01",
+        "privateDnsApiVersion": "2018-09-01",
+        "privateEndpointApiVersion": "2021-03-01",
+        "vnetAddress": "10.0.0.0/16",
+        "subnetAddressForApp": "10.0.0.0/24",
+        "subnetAddressForDb": "10.0.1.0/24",
+        "cdnApiVersion": "2020-04-15",
+        "blobApiVersion": "2021-08-01",
+        "storageAccountId": "[resourceId('Microsoft.Storage/storageAccounts', parameters('storageAccountName'))]",
+        "frontDoorProfileName": "numotionwp-fd-dev",
+        "frontdoorApiVersion": "2021-06-01",
+        "frontDoorOriginGroupName": "numotionwpOriginGroup",
+        "frontDoorOriginName": "numotionwpAppServiceOrigin",
+        "frontDoorRouteName": "numotionwpRoute"
+    }
+}

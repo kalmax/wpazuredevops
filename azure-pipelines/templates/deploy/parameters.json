@@ -1,0 +1,195 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "subscriptionId": {
+            "value": "c89770e4-eafa-4fac-b448-ec14c509df0c"
+        },
+        "name": {
+            "value": "numotionwpappdev"
+        },
+        "location": {
+            "value": "eastus"
+        },
+        "hostingPlanName": {
+            "value": "NumotionWPRGDEVHostingPlan"
+        },
+        "serverFarmResourceGroup": {
+            "value": "numotionwprgdev"
+        },
+        "sku": {
+            "value": "Basic"
+        },
+        "skuCode": {
+            "value": "B1"
+        },
+        "workerSize": {
+            "value": "3"
+        },
+        "workerSizeId": {
+            "value": "3"
+        },
+        "numberOfWorkers": {
+            "value": "1"
+        },
+        "kind": {
+            "value": "linux"
+        },
+        "reserved": {
+            "value": true
+        },
+        "alwaysOn": {
+            "value": true
+        },
+        "linuxFxVersion": {
+            "value": "DOCKER|numotionwpdev.azurecr.io/numotionwpacr-dev:latest"
+        },
+        "dockerRegistryUrl": {
+            "value": "https://numotionwpdev.azurecr.io"
+        },
+        "dockerRegistryUser": {
+            "value": "numotionwpdev"
+        },
+        "dockerRegistryPass": {
+            "value": "KA6G4tP6WEtiHtfMO=7qZd=Eg1zvuy6+"
+        },
+        "storageSizeGB": {
+            "value": 32
+        },
+        "storageIops": {
+            "value": 400
+        },
+        "storageAutoGrow": {
+            "value": "Enabled"
+        },
+        "backupRetentionDays": {
+            "value": 7
+        },
+        "geoRedundantBackup": {
+            "value": "Disabled"
+        },
+        "vmName": {
+            "value": "Standard_B1ms"
+        },
+        "serverEdition": {
+            "value": "Burstable"
+        },
+        "vCores": {
+            "value": 1
+        },
+        "charset": {
+            "value": "utf8"
+        },
+        "collation": {
+            "value": "utf8_general_ci"
+        },
+        "serverName": {
+            "value": "numotionwpdbdev"
+        },
+        "serverUsername": {
+            "value": "numotionwp"
+        },
+        "serverPassword": {
+            "value": "numotionwp1234"
+        },
+        "databaseName": {
+            "value": "wordpress"
+        },
+        "publicNetworkAccess": {
+            "value": "Disabled"
+        },
+        "wordpressTitle": {
+            "value": "Numotion WP"
+        },
+        "wordpressAdminEmail": {
+            "value": "kalpan.bhalsod@from.digital"
+        },
+        "wordpressUsername": {
+            "value": "admin"
+        },
+        "wordpressPassword": {
+            "value": "admin@1234"
+        },
+        "defaultPluginsInstall": {
+            "value": "windows-azure-storage"
+        },
+        "wpLocaleCode": {
+            "value": "en_US"
+        },
+        "cdnProfileName": {
+            "value": "numotion-cdnprofile-dev"
+        },
+        "cdnEndpointName": {
+            "value": "numotion-endpoint-dev"
+        },
+        "cdnType": {
+            "value": "Standard_Microsoft"
+        },
+        "storageAccountName": {
+            "value": "numotionstoragedev"
+        },
+        "blobContainerName": {
+            "value": "numotionfiles"
+        },
+        "storageAccountType": {
+            "value": "Standard_RAGRS"
+        },
+        "storageAccountKind": {
+            "value": "StorageV2"
+        },
+        "accessTier": {
+            "value": "Hot"
+        },
+        "minimumTlsVersion": {
+            "value": "TLS1_2"
+        },
+        "supportsHttpsTrafficOnly": {
+            "value": true
+        },
+        "allowBlobPublicAccess": {
+            "value": true
+        },
+        "allowSharedKeyAccess": {
+            "value": true
+        },
+        "allowCrossTenantReplication": {
+            "value": true
+        },
+        "networkAclsBypass": {
+            "value": "AzureServices"
+        },
+        "networkAclsDefaultAction": {
+            "value": "Allow"
+        },
+        "keySource": {
+            "value": "Microsoft.Storage"
+        },
+        "encryptionEnabled": {
+            "value": true
+        },
+        "infrastructureEncryptionEnabled": {
+            "value": false
+        },
+        "blobPublicAccessLevel": {
+            "value": "blob"
+        },
+        "vnetName": {
+            "value": "numotionwp-vnet-dev"
+        },
+        "subnetForApp": {
+            "value": "numotionwp-appsubnet-dev"
+        },
+        "subnetForDb": {
+            "value": "numotionwp-dbsubnet"
+        },
+        "privateDnsZoneNameForDb": {
+            "value": "wpnumotiondb-privatelink.mysql.database.azure.com"
+        },
+        "frontDoorEndpointName": {
+           "value": "numotionwp-frondoor-dev"
+        },
+        "frontDoorSkuName": {
+            "value": "Premium_AzureFrontDoor"  
+        }
+    }
+}
