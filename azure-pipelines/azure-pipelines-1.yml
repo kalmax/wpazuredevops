@@ -1,4 +1,5 @@
 # Docker
+
 # Build and push an image to Azure Container Registry
 # https://docs.microsoft.com/azure/devops/pipelines/languages/docker
 
@@ -11,9 +12,14 @@ resources:
 variables:
   # Container registry service connection established during pipeline creation
   dockerRegistryServiceConnection: '3846bc72-94a4-4295-83b4-a795773df9e4'
-  imageRepository: 'numotionwpacr-dev'
-  containerRegistry: 'numotionwpdev.azurecr.io'
+  buildConfiguration: 'Release'
+  location: 'eastus'
+  rgName: 'numotionwprgdev'
+  imageRepository: 'wpnumotionacrdev'
+  containerRegistry: 'wpnumotionacr.azurecr.io'
   dockerfilePath: '$(Build.SourcesDirectory)/app/Dockerfile'
+  acrtemplateLocation: '$(Build.SourcesDirectory)/azure-pipelines/templates/acr'
+  deploytemplateLocation: '$(Build.SourcesDirectory)/azure-pipelines/templates/deploy'
   tag: '$(Build.BuildId)'
 
   # Agent VM image name
@@ -21,13 +27,26 @@ variables:
 
 stages:
 - stage: Build
-  displayName: Build and push stage
+  displayName: Build and push
   jobs:
   - job: Build
     displayName: Build
     pool:
       vmImage: $(vmImageName)
     steps:
+    # Create or update the ACR resource
+    - task: AzureResourceGroupDeployment@2
+      displayName: 'Azure Deployment:Create Azure Container Registry'
+      inputs:
+        azureSubscription: 'Azure subscription 1 (c89770e4-eafa-4fac-b448-ec14c509df0c)'
+        action: 'Create Or Update Resource Group'
+        resourceGroupName: '$(rgName)'
+        location: '$(location)'
+        templateLocation: 'Linked artifact'
+        csmFile: '$(acrtemplateLocation)/template.json'
+        csmParametersFile: '$(acrtemplateLocation)/parameters.json'
+        overrideParameters: '-registryName "$(imageRepository)" -registryLocation "$(location)" -registrySku Premium'
+        deploymentMode: 'Incremental'
     - task: Docker@2
       displayName: Build and push an image to container registry
       inputs:
@@ -38,3 +57,53 @@ stages:
         tags: |
           latest
           $(tag)
+    # Copy ARM templates
+    - task: CopyFiles@2
+      displayName: 'Copy ARM templates'
+      inputs:
+        SourceFolder: 'azure-pipelines'
+        TargetFolder: '$(build.artifactstagingdirectory)'
+
+    # Publish the app as an artifact
+    - publish: $(Build.StagingDirectory)
+      artifact: pipelinefiles
+# Staging release
+- stage: Deploy
+  jobs:
+  - job: Release
+    pool:
+      vmImage: 'ubuntu-latest'
+    steps:
+    # Don't clone the repo
+    - checkout: none
+    - task: AzureKeyVault@1
+      inputs:
+        azureSubscription: 'Azure subscription 1 (c89770e4-eafa-4fac-b448-ec14c509df0c)'
+        KeyVaultName: 'numotionkeyvault'
+        SecretsFilter: '*'
+        RunAsPreJob: true
+
+    # Download the published application artifact
+    - download: current
+      artifact: pipelinefiles
+
+    # Create or update Azure resources for WP Numotion environment
+    - task: AzureResourceGroupDeployment@2
+      displayName: 'Azure Deployment:Create or update Azure resources for WP Numotion environment'
+      inputs:
+        azureSubscription: 'Azure subscription 1 (c89770e4-eafa-4fac-b448-ec14c509df0c)'
+        resourceGroupName: '$(rgName)'
+        location: '$(location)'
+        csmFile: '$(Pipeline.Workspace)/**/templates/deploy/template.json'
+        csmParametersFile: '$(Pipeline.Workspace)/**/templates/deploy/parameters.json'
+        overrideParameters: '[parameters("numotionkeyvault").wordpressTitle]'
+    - task: AzureCLI@2
+      inputs:
+        azureSubscription: 'Azure subscription 1 (c89770e4-eafa-4fac-b448-ec14c509df0c)'
+        scriptType: 'bash'
+        scriptLocation: 'inlineScript'
+        inlineScript: 'az mysql flexible-server parameter set --name require_secure_transport --resource-group numotionWPRGDEV --server-name numotionwpdbdev --value OFF'
+        addSpnToEnvironment: true
+        useGlobalConfig: true
+        failOnStandardError: true
+  
